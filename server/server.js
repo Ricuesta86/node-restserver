@@ -1,7 +1,12 @@
 require('./config/config');
 
 const express = require('express');
+const mongoose = require('mongoose');
+
+
 const app = express();
+const router = express.Router()
+const usuario = require('./routes/usuario');
 
 // parse application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: false }));
@@ -9,27 +14,16 @@ app.use(express.urlencoded({ extended: false }));
 // parse application/json
 app.use(express.json());
 
-app.get('/usuario', (req, res) => {
-    res.json('get usuario');
-});
+app.use(usuario);
 
-app.post('/usuario', (req, res) => {
+// app.get('/', (req, res) => {
+//     res.send('Holamundo')
+// })
 
-    let body = req.body;
 
-    res.json({
-        'persona': body
-    });
-});
-
-app.put('/usuario/:id', (req, res) => {
-    let id = req.params.id;
-    res.json({ id });
-});
-
-app.delete('/usuario/:id', (req, res) => {
-    let id = req.params.id;
-    res.json({ id });
+mongoose.connect(process.env.URLDB, (err, res) => {
+    if (err) throw err;
+    console.log('Base de Datos Online');
 });
 
 app.listen(process.env.PORT, () => {
