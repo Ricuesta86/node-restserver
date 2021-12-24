@@ -1,10 +1,11 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
+const { verificarToken, verificarAdmin_Role } = require('../middlewares/autenticacion');
 const Usuario = require('../models/usuario');
 const router = express.Router();
 
-router.get('/usuario', (req, res) => {
+router.get('/usuario', verificarToken, (req, res) => {
 
     let desde = req.query.desde || 0;
     desde = Number(desde);
@@ -32,7 +33,7 @@ router.get('/usuario', (req, res) => {
         });
 });
 
-router.post('/usuario', (req, res) => {
+router.post('/usuario', [verificarToken, verificarAdmin_Role], (req, res) => {
 
     let body = req.body;
 
@@ -59,7 +60,7 @@ router.post('/usuario', (req, res) => {
     });
 });
 
-router.put('/usuario/:id', (req, res) => {
+router.put('/usuario/:id', [verificarToken, verificarAdmin_Role], (req, res) => {
     let id = req.params.id;
     let body = _.pick(req.body, ['nombre', 'email', 'role', 'estado', 'img']);
     // res.json({ body });
@@ -77,7 +78,7 @@ router.put('/usuario/:id', (req, res) => {
     });
 });
 
-router.delete('/usuario/:id', (req, res) => {
+router.delete('/usuario/:id', [verificarToken, verificarAdmin_Role], (req, res) => {
     let id = req.params.id;
     let cambiaEstado = {
         estado: false

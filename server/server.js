@@ -5,8 +5,8 @@ const mongoose = require('mongoose');
 
 
 const app = express();
-const router = express.Router()
-const usuario = require('./routes/usuario');
+
+const index = require('./routes/index');
 
 // parse application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: false }));
@@ -14,11 +14,8 @@ app.use(express.urlencoded({ extended: false }));
 // parse application/json
 app.use(express.json());
 
-app.use(usuario);
-
-// app.get('/', (req, res) => {
-//     res.send('Holamundo')
-// })
+//  Configuración global de las Rutas
+app.use(index);
 
 
 mongoose.connect(process.env.URLDB, (err, res) => {
