@@ -2,6 +2,7 @@ require('./config/config');
 
 const express = require('express');
 const mongoose = require('mongoose');
+const path = require('path');
 
 
 const app = express();
@@ -13,6 +14,9 @@ app.use(express.urlencoded({ extended: false }));
 
 // parse application/json
 app.use(express.json());
+
+app.use(express.static(path.resolve(__dirname, '../public/')));
+
 
 //  Configuración global de las Rutas
 app.use(index);
