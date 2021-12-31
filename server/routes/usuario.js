@@ -101,7 +101,7 @@ router.delete('/usuario/:id', [verificarToken, verificarAdmin_Role], (req, res) 
 
         res.json({
             ok: true,
-            usuarioBorrado
+            usuario: usuarioBorrado
         });
     });
 
