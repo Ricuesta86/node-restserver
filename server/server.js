@@ -2,6 +2,7 @@ require('./config/config');
 
 const express = require('express');
 const mongoose = require('mongoose');
+const fileUpload = require('express-fileupload');
 const path = require('path');
 
 
@@ -17,7 +18,7 @@ app.use(express.json());
 
 app.use(express.static(path.resolve(__dirname, '../public/')));
 
-
+app.use(fileUpload());
 //  Configuración global de las Rutas
 app.use(index);
 
